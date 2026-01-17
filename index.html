@@ -48,12 +48,12 @@
             content: '';
             position: fixed;
             top: 0;
-            left: 0;
+            left: 100;
             width: 400%;
             height: 400%;
             background-image: url('apple.png');
-            background-size: 120px 120px;
-            opacity: 0.15;
+            background-size: 300px 300px;
+            opacity: 0.025;
             z-index: -1;
             animation: moveBackground 40s linear infinite;
             pointer-events: none;
@@ -1291,7 +1291,7 @@
         <div class="loading-content">
             <div class="loading-spinner"></div>
             <h2 style="color: var(--primary); margin-bottom: 10px;">Loading Nutrition Adventure<span class="loading-dots"></span></h2>
-            <p style="color: #666; margin-bottom: 15px;">Loading game data and resources</p>
+            <p id="loadingMessage" style="color: #666; margin-bottom: 15px;">Loading game data and resources</p>
             <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 20px;">
                 <div style="width: 20px; height: 20px; background: var(--primary); border-radius: 50%; animation: bounce 1s infinite;"></div>
                 <div style="width: 20px; height: 20px; background: var(--secondary); border-radius: 50%; animation: bounce 1s infinite 0.2s;"></div>
@@ -1636,11 +1636,32 @@
         }
         
         function updateLoadingMessage(message) {
-            const loadingDots = document.querySelector('.loading-dots');
-            if (loadingDots) {
-                loadingDots.parentElement.querySelector('p').textContent = message;
+    // Try multiple ways to find the loading message element
+    let loadingMessageElement = null;
+    
+    // Try to get by ID first
+    loadingMessageElement = document.getElementById('loadingMessage');
+    
+    // If not found by ID, try by class
+    if (!loadingMessageElement) {
+        const loadingContent = document.querySelector('.loading-content');
+        if (loadingContent) {
+            // Look for paragraph in loading content
+            const paragraphs = loadingContent.querySelectorAll('p');
+            if (paragraphs.length > 0) {
+                loadingMessageElement = paragraphs[0];
             }
         }
+    }
+    
+    // If we found the element, update it
+    if (loadingMessageElement) {
+        loadingMessageElement.textContent = message;
+    } else {
+        // Fallback: log to console if element not found
+        console.log("Loading:", message);
+    }
+}
         
         // ============================================
         // EXTERNAL DATA LOADING
@@ -1648,18 +1669,18 @@
         
         function loadExternalData() {
             updateLoadingMessage("Loading game data...");
-            
-            // Check if external data is already loaded
-            if (typeof QUESTIONS !== 'undefined' && 
-                typeof FACTS !== 'undefined' && 
-                typeof EXERCISE_CHALLENGES !== 'undefined' && 
-                typeof WIN_MESSAGES !== 'undefined') {
-                
-                externalDataLoaded = true;
-                console.log("External data already loaded!");
-                hideLoadingScreen();
-                return;
-            }
+    
+    // Check if external data is already loaded
+    if (typeof QUESTIONS !== 'undefined' && 
+        typeof FACTS !== 'undefined' && 
+        typeof EXERCISE_CHALLENGES !== 'undefined' && 
+        typeof WIN_MESSAGES !== 'undefined') {
+        
+        externalDataLoaded = true;
+        console.log("External data already loaded!");
+        hideLoadingScreen();
+        return; // STOP HERE - don't load again!
+    }
             
             // Try to load the external data file
             const script = document.createElement('script');
@@ -2035,10 +2056,56 @@
         
         function initGame() {
             // Check if external data is loaded
-            if (!externalDataLoaded) {
-                showTurnMessage("Game data still loading. Please wait...", 3000);
-                return;
-            }
+            // if (!externalDataLoaded) {
+            //     showTurnMessage("Game data still loading. Please wait...", 3000);
+            //     return;
+            // }
+            // Get DOM elements
+    startScreen = document.getElementById('startScreen');
+    winScreen = document.getElementById('winScreen');
+    gameBoard = document.getElementById('gameBoard');
+    boardPath = document.getElementById('boardPath');
+    playersContainer = document.getElementById('playersContainer');
+    diceResult = document.getElementById('diceResult');
+    questionPanel = document.getElementById('questionPanel');
+    questionText = document.getElementById('questionText');
+    questionIcon = document.getElementById('questionIcon');
+    questionType = document.getElementById('questionType');
+    optionsContainer = document.getElementById('optionsContainer');
+    feedback = document.getElementById('feedback');
+    rollBtn = document.getElementById('rollBtn');
+    newGameBtn = document.getElementById('newGameBtn');
+    startGameBtn = document.getElementById('startGameBtn');
+    playAgainBtn = document.getElementById('playAgainBtn');
+    winnerMessage = document.getElementById('winnerMessage');
+    nutritionMessage = document.getElementById('nutritionMessage');
+    statsContainer = document.getElementById('statsContainer');
+    turnMessage = document.getElementById('turnMessage');
+    loadingScreen = document.getElementById('loadingScreen');
+    
+    // Check if loading screen exists
+    if (!loadingScreen) {
+        console.error("Loading screen element not found!");
+        // Load data without loading screen
+        loadExternalData();
+        return;
+    }
+    
+    // Show loading screen immediately
+    showLoadingScreen();
+    
+    // Start loading external data
+    setTimeout(() => {
+        loadExternalData();
+    }, 500);
+    
+    // Create music elements
+    createMusicElements();
+    
+    // Initialize configuration after data loads
+    setTimeout(() => {
+        initializeConfiguration();
+    }, 1000);
             
             // Update CONFIG with chosen tile count
             CONFIG.finishTile = currentTileCount - 1;
@@ -2230,6 +2297,13 @@
                 description: 'Complete your nutrition journey! First player to reach here wins!'
             });
         }
+
+        if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initGame);
+} else {
+    // DOM is already ready
+    initGame();
+}
         
         function renderBoard() {
             if (!boardPath) return;

@@ -1,8 +1,20 @@
-// QUESTIONS DATABASE
-// To add more questions, copy the structure below and add to this array
-const QUESTIONS = [
-    // Multiple choice questions about nutrients
-    {
+// Wrap everything in an IIFE to avoid redeclaration errors
+if (typeof QUESTIONS === 'undefined') {
+    var QUESTIONS = [];  // Use var instead of const for redeclaration
+}
+if (typeof FACTS === 'undefined') {
+    var FACTS = [];
+}
+if (typeof EXERCISE_CHALLENGES === 'undefined') {
+    var EXERCISE_CHALLENGES = [];
+}
+if (typeof WIN_MESSAGES === 'undefined') {
+    var WIN_MESSAGES = [];
+}
+
+// Now populate them
+QUESTIONS = QUESTIONS || [
+     {
         type: "nutrient",
         question: "Which nutrient is the main source of energy for your body?",
         options: ["Proteins", "Carbohydrates", "Fats", "Vitamins"],
@@ -1159,9 +1171,7 @@ const QUESTIONS = [
     }
 ];
 
-// HEALTHY FACTS DATABASE
-// Add more interesting facts about nutrition here!
-const FACTS = [
+FACTS = FACTS || [
     "Did you know? Drinking water helps your brain work better!",
     "Fun fact: Carrots were originally purple, not orange!",
     "Eating a rainbow of fruits and vegetables gives you different nutrients!",
@@ -1625,10 +1635,8 @@ const FACTS = [
     "% Daily Value shows how much a nutrient contributes to your daily needs!",
 ];
 
-// EXERCISE CHALLENGES
-// Add more fun exercise challenges here!
-const EXERCISE_CHALLENGES = [
-    "Do 5 jumping jacks! Ready? Go!",
+EXERCISE_CHALLENGES = EXERCISE_CHALLENGES || [
+   "Do 5 jumping jacks! Ready? Go!",
     "Stretch up high like you're picking an apple from a tree!",
     "Balance on one foot for 10 seconds!",
     "Take 3 deep breaths to relax your mind!",
@@ -1645,25 +1653,7 @@ const EXERCISE_CHALLENGES = [
     "Do 5 knee lifts while marching!"
 ];
 
-// BONUS CHALLENGES
-// Add more bonus challenges here!
-const BONUS_CHALLENGES = [
-    "Name 3 green vegetables!",
-    "Name a fruit!",
-    "Name a red fruit!",
-    "Name a type of meat!",
-    "What's one way you can be more active today?",
-    "Name a fruit that's green!",
-    "What do you eat for breakfast?",
-    "What vegetable is orange and good for your eyes?",
-    "What's a healthy drink besides water?",
-    "What's your favorite way to exercise?",
-    "Name a yellow fruit!",
-];
-
-// WINNING NUTRITION MESSAGES
-// Add more positive nutrition messages here!
-const WIN_MESSAGES = [
+WIN_MESSAGES = WIN_MESSAGES || [
     "Remember: A balanced diet is key to a healthy life!",
     "Keep eating colorful fruits and vegetables every day!",
     "Don't forget to drink plenty of water!",
@@ -1681,14 +1671,3 @@ const WIN_MESSAGES = [
     "You are what you eat - choose wisely!"
 ];
 
-// ============================================
-// TIPS FOR ADDING MORE CONTENT:
-// ============================================
-// 1. QUESTIONS: Copy an existing question object and change the text
-// 2. FACTS: Just add a new string to the FACTS array
-// 3. EXERCISE CHALLENGES: Add a new string to EXERCISE_CHALLENGES array
-// 4. BONUS CHALLENGES: Add a new string to BONUS_CHALLENGES array  
-// 5. WIN MESSAGES: Add a new string to WIN_MESSAGES array
-//
-// Save the file and refresh the game to see your new content!
-// ============================================
