@@ -1,19 +1,7 @@
-// Wrap everything in an IIFE to avoid redeclaration errors
-if (typeof QUESTIONS === 'undefined') {
-    var QUESTIONS = [];  // Use var instead of const for redeclaration
-}
-if (typeof FACTS === 'undefined') {
-    var FACTS = [];
-}
-if (typeof EXERCISE_CHALLENGES === 'undefined') {
-    var EXERCISE_CHALLENGES = [];
-}
-if (typeof WIN_MESSAGES === 'undefined') {
-    var WIN_MESSAGES = [];
-}
+
 
 // Now populate them
-QUESTIONS = QUESTIONS || [
+var QUESTIONS = QUESTIONS || [
      {
         type: "nutrient",
         question: "Which nutrient is the main source of energy for your body?",
@@ -1171,7 +1159,7 @@ QUESTIONS = QUESTIONS || [
     }
 ];
 
-FACTS = FACTS || [
+var FACTS = FACTS || [
     "Did you know? Drinking water helps your brain work better!",
     "Fun fact: Carrots were originally purple, not orange!",
     "Eating a rainbow of fruits and vegetables gives you different nutrients!",
@@ -1635,7 +1623,7 @@ FACTS = FACTS || [
     "% Daily Value shows how much a nutrient contributes to your daily needs!",
 ];
 
-EXERCISE_CHALLENGES = EXERCISE_CHALLENGES || [
+var EXERCISE_CHALLENGES = EXERCISE_CHALLENGES || [
    "Do 5 jumping jacks! Ready? Go!",
     "Stretch up high like you're picking an apple from a tree!",
     "Balance on one foot for 10 seconds!",
@@ -1653,7 +1641,7 @@ EXERCISE_CHALLENGES = EXERCISE_CHALLENGES || [
     "Do 5 knee lifts while marching!"
 ];
 
-WIN_MESSAGES = WIN_MESSAGES || [
+var WIN_MESSAGES = WIN_MESSAGES || [
     "Remember: A balanced diet is key to a healthy life!",
     "Keep eating colorful fruits and vegetables every day!",
     "Don't forget to drink plenty of water!",
@@ -1671,3 +1659,8 @@ WIN_MESSAGES = WIN_MESSAGES || [
     "You are what you eat - choose wisely!"
 ];
 
+console.log("Nutrition Warfare data loaded successfully!");
+console.log("Questions:", QUESTIONS.length);
+console.log("Facts:", FACTS.length);
+console.log("Exercises:", EXERCISE_CHALLENGES.length);
+console.log("Win messages:", WIN_MESSAGES.length);
