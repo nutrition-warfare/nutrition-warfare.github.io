@@ -29,7 +29,7 @@ const TILE_TYPES = {
         emoji: "❓", 
         color: "tile-question", 
         description: "Answer a nutrition question correctly to earn extra moves!",
-        probability: 0.35
+        probability: 0.45
     },
     EXERCISE: { 
         name: "Exercise", 
@@ -43,14 +43,14 @@ const TILE_TYPES = {
         emoji: "💡", 
         color: "tile-fact", 
         description: "Learn an interesting health fact!",
-        probability: 0.20
+        probability: 0.15
     },
     EMPTY: { 
         name: "Rest", 
         emoji: "😌", 
         color: "tile-empty", 
         description: "Take a break and rest on this space.",
-        probability: 0.30
+        probability: 0.25
     },
     START: { 
         name: "Start", 
