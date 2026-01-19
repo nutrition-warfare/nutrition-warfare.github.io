@@ -226,17 +226,17 @@ function adjustTileProbabilities() {
     
     // Adjust probabilities based on board size
     if (tileCount <= 30) {
-        TILE_TYPES.QUESTION.probability = 0.35;
+        TILE_TYPES.QUESTION.probability = 0.67;
         TILE_TYPES.EXERCISE.probability = 0.15;
         TILE_TYPES.FACT.probability = 0.20;
         TILE_TYPES.EMPTY.probability = 0.30;
     } else if (tileCount <= 45) {
-        TILE_TYPES.QUESTION.probability = 0.30;
+        TILE_TYPES.QUESTION.probability = 0.45;
         TILE_TYPES.EXERCISE.probability = 0.20;
         TILE_TYPES.FACT.probability = 0.25;
         TILE_TYPES.EMPTY.probability = 0.25;
     } else {
-        TILE_TYPES.QUESTION.probability = 0.25;
+        TILE_TYPES.QUESTION.probability = 0.3;
         TILE_TYPES.EXERCISE.probability = 0.25;
         TILE_TYPES.FACT.probability = 0.30;
         TILE_TYPES.EMPTY.probability = 0.20;
