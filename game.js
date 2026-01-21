@@ -362,6 +362,7 @@ function animateMovement(spaces) {
             currentPlayer.position = startPosition + currentStep + 1;
             updatePlayerPositions();
             currentStep++;
+            
             setTimeout(moveStep, stepDelay);
         } else {
             // Animation complete
@@ -381,7 +382,34 @@ function animateMovement(spaces) {
         }
     }
     
-    moveStep();
+    if (spaces > 0) {
+        moveStep();
+    } else{
+        // Handle backward movement
+        const backwardSpaces = Math.abs(spaces);
+        let backwardStep = 0;
+        
+        function moveBackwardStep() {
+            if (backwardStep < backwardSpaces && currentPlayer.position > CONFIG.startTile) {
+                currentPlayer.position = Math.max(currentPlayer.position - 1, CONFIG.startTile);
+                updatePlayerPositions();
+                backwardStep++;
+                
+                setTimeout(moveBackwardStep, stepDelay);
+            } else {
+                // Animation complete
+                updatePlayerPositions();
+                renderPlayerInfo();
+                
+                // Check tile action after animation
+                setTimeout(() => {
+                    checkTileAction(currentPlayer.position);
+                }, 500);
+            }
+        }
+        
+        moveBackwardStep();
+    }
 }
 
 function checkTileAction(tileIndex) {
@@ -622,6 +650,7 @@ function givePenalty(penaltyMoves) {
         showTurnMessage(`Move back ${Math.abs(penaltyMoves)} space${Math.abs(penaltyMoves) > 1 ? 's' : ''}. Don't worry, you'll get the next one!`, 3000);
         setTimeout(() => {
             animateMovement(penaltyMoves);
+            console.log("Applying penalty movement");
         }, 1000);
     } else {
         endTurn();
